@@ -162,7 +162,7 @@ impl<'a, WE: serde::de::DeserializeOwned> WebSockets<'a, WE> {
                         (self.handler)(event)?;
                     }
                     Message::Ping(ping) => {
-                         let pong = Message::Pong(ping.clone());
+                        let pong = Message::Pong(vec![]);
                         socket.send(pong).await;
                                                 log::info!("ping message: {:#?}", ping);
                     }, Message::Pong(pong) => {
