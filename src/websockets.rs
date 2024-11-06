@@ -169,6 +169,7 @@ impl<'a, WE: serde::de::DeserializeOwned> WebSockets<'a, WE> {
                                                 log::info!("pong msg {:#?}", pong); },
                      Message::Binary(_) | Message::Frame(_) => {}
                     Message::Close(e) => {
+                        log::info!("Disconnect reason is: {:#?}", e);
                         return Err(Error::Msg(format!("Disconnected {e:?}")));
                     }
                 }
