@@ -1,6 +1,7 @@
 use std::sync::atomic::{AtomicBool, Ordering};
 
-use futures::StreamExt;
+use futures::{SinkExt, StreamExt};
+
 use serde_json::from_str;
 use tokio::net::TcpStream;
 use tokio_tungstenite::tungstenite::handshake::client::Response;
@@ -161,7 +162,7 @@ impl<'a, WE: serde::de::DeserializeOwned> WebSockets<'a, WE> {
                         (self.handler)(event)?;
                     }
                     Message::Ping(ping) => {
-                          let pong = Message::Pong(ping);
+                         let pong = Message::Pong(ping.clone());
                         socket.send(pong).await;
                                                 log::info!("ping message: {:#?}", ping);
                     }, Message::Pong(pong) => {
